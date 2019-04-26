@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+  <title>RPS Game with simple UI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="keys">
+    <div class="key">
+      <kbd>Rock</kbd>
+      
+    </div>
+    <div class="key">
+      <kbd>Paper</kbd>
+      
+    </div>
+    <div class="key">
+      <kbd>Scissors</kbd>
+      
+    </div>
+
+    <div class="score">
+      Score
+    <div id="playerScore">
+      Player: 0
+    </div>
+  <div id="computerScore">
+      Computer: 0
+    </div>
+    </div>
+
+  </div>
+<div class="mensajesJuego">
+
+</div>
+
+  <script>
+    
+     
+    const botonSeleccionado = document.querySelectorAll('.key');
+    botonSeleccionado.forEach((boton)=>{
+      boton.addEventListener('click',(e)=>{
+        let texto = boton.innerText;
+        game(texto.toUpperCase());
+      });
+    
+    });
+   
+
+  let playerScore=0;
+  let computerScore=0;
+
+  function playRound(playerSelection, computerSelection) {
+  
+    let msg="Unknow error!!!";
+    if (playerSelection===computerSelection){
+      msg="You draw! Both choose " + playerSelection;
+    }else if (playerSelection=="ROCK" && computerSelection=="PAPER"){
+      msg="You lose! Paper beats Rock.";
+      computerScore+=1;
+    }else if(playerSelection=="ROCK" && computerSelection=="SCISSORS"){
+      msg="You win! Rock beats Scissors";
+      playerScore+=1;
+    }else if (playerSelection=="SCISSORS" && computerSelection=="PAPER"){
+      msg="You win! Scissors beats Paper";
+      playerScore+=1;
+    }else if (playerSelection=="SCISSORS" && computerSelection=="ROCK"){
+      msg="You lose! Rock beats Scissors";
+      computerScore+=1;
+    }else if (playerSelection=="PAPER" && computerSelection=="ROCK"){
+      msg="You win! Paper beats Rock";
+      playerScore+=1;
+    }else if (playerSelection=="PAPER" && computerSelection=="SCISSORS"){
+      msg="You lose! Scissors beats Paper";
+      computerScore+=1;
+    }
+      
+    return (msg)
+  }
+
+
+
+function game(botonJugador){
+    
+    const playerSelection = botonJugador 
+    const computerSelection = computerPlay()
+      
+    const informePartida = document.querySelector('.mensajesJuego')
+    informePartida.innerText = playRound(playerSelection, computerSelection); 
+  
+  const puntajeJugador = document.querySelector('#playerScore')
+  puntajeJugador.innerText = `Player: ` + playerScore;
+
+const puntajePC = document.querySelector('#computerScore')
+puntajePC.innerText = `Computer: ` + computerScore;
+
+   if (playerScore==5 || computerScore==5){
+    playerScore==5?alert('Player wins the Match!'):alert('Computer wins the Match!')
+    
+    resetGame(puntajeJugador,puntajePC,informePartida);
+  }
+
+}
+
+function resetGame(x,y,z){
+  playerScore=0;
+  computerScore=0;
+  x.innerText = `Player: 0`;
+  y.innerText = `Computer: 0`;
+  z.innerText = ``;
+}
+
+
+  function computerPlay(){
+        switch(Math.floor( Math.random() * 3 )){
+          case 0:
+            return "ROCK";
+            break;
+          case 1:
+            return "PAPER";
+            break;
+          default:
+            return "SCISSORS";
+            break;
+        }
+  }
+    
+  </script>
+</body>
+</html>
